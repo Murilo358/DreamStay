@@ -7,5 +7,9 @@ export default function Home() {
   //useSession pega o user da context
   const { data } = useSession();
 
-  return <div></div>;
+  return (
+    <div className="bg-primary">
+      <h1>Hello world</h1>
+    </div>
+  );
 }
