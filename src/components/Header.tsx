@@ -60,7 +60,7 @@ const header = () => {
             alt={data.user.name!}
           />
           {openedMenu && (
-            <div className="absolute top-14 bg-white left-0 h-full w-full p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
+            <div className="absolute z-20 top-14 bg-white left-0 h-full w-full p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
               <button
                 className="text-primary text-sm font-semibold"
                 onClick={handleSignOutClick}
