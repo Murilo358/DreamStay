@@ -1,3 +1,5 @@
+"use client";
+
 import { LegacyRef, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 import _DatePicker, {

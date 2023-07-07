@@ -1,14 +1,15 @@
-"use client ";
-import React from "react";
-import Input from "@/components/Input";
-import DatePicker from "@/components/DatePicker";
-import CurrencyInput from "@/components/CurrencyInput";
+"use client";
+
 import Button from "@/components/Button";
+import CurrencyInput from "@/components/CurrencyInput";
+import DatePicker from "@/components/DatePicker";
+import Input from "@/components/Input";
+import React from "react";
 
 const TripSearch = () => {
   return (
-    <div className="container mx-auto bg-search-background bg-cover bg-center bg-no-repeat">
-      <h1 className=" text-center font-semibold text-2xl text-grayPrimary">
+    <div className="container mx-auto bg-search-background bg-cover bg-center items-center bg-no-repeat">
+      <h1 className=" text-center font-semibold text-2xl text-grayPrimary ">
         Encontre sua proxima <span className="text-primary">viagem!</span>
       </h1>
 
@@ -16,9 +17,9 @@ const TripSearch = () => {
         <Input placeholder="Onde você quer ir?" />
         <div className="flex gap-4">
           <DatePicker
-            className="w-full"
+            placeholderText="Data de Ida"
             onChange={() => {}}
-            placeholderText="Data de ida"
+            className="w-full"
           />
           <CurrencyInput placeholder="Orçamento" />
         </div>

@@ -3,6 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { AiOutlineMenu } from "react-icons/ai";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const header = () => {
   //Usar uma função para handle login melhora a performace
@@ -28,9 +29,12 @@ const header = () => {
     <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center">
       {/* Uma div relative com o tamanho definido irá garantir que a imagem sempre será aquele tamanho */}
       {/* Lembrar de passar o fill como propriedadae */}
-      <div className="relative h-[32px] w-[183px]">
-        <Image src="/logo.png" alt="DreamStay" fill />
-      </div>
+
+      <Link href={"/"}>
+        <div className="relative h-[32px] w-[183px]">
+          <Image src="/logo.png" alt="DreamStay" fill />
+        </div>
+      </Link>
 
       {status === "unauthenticated" && (
         <button
