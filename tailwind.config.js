@@ -11,12 +11,13 @@ module.exports = {
         "search-background": "url(/world-map.png)",
       },
       colors: {
-        primary: "#590bd8",
+        primary: "#DC143C",
         secondary: "#312A4F",
-        primaryLighter: "#DDD5EA",
+        primaryLighter: "#FF4863",
         grayPrimary: "#717171",
         primaryDarker: "#312A4F",
         grayLighter: "#BBBFBF",
+        whitePrimary: "#F5F5F5",
       },
       textColor: {
         dark: "#717171",
