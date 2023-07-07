@@ -34,7 +34,12 @@ const TripReservation = ({ trip }: TripReservationProps) => {
           <p className="font-medium text-sm text-primaryDarker">Total: </p>
           <p className="font-medium text-sm text-primaryDarker">R$2.500,00 </p>
         </div>
-        <Button>Reservar agora!</Button>
+        <div
+          className=" pb-10 border-b border-grayLighter
+        "
+        >
+          <Button className="w-full mt-3">Reservar agora!</Button>
+        </div>
       </div>
     </div>
   );
