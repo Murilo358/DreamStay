@@ -5,7 +5,7 @@ import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
 import { Trip } from "@prisma/client";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 interface TripReservationProps {
   trip: Trip;
@@ -13,12 +13,15 @@ interface TripReservationProps {
 
 interface TripReservationForm {
   guests: number;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 const TripReservation = ({ trip }: TripReservationProps) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<TripReservationForm>();
 
@@ -30,15 +33,46 @@ const TripReservation = ({ trip }: TripReservationProps) => {
     <div>
       <div className="flex flex-col px-5">
         <div className="flex gap-4 ">
-          <DatePicker
-            className="w-full"
-            placeholderText="Data de inicio"
-            onChange={() => {}}
+          <Controller
+            name="startDate"
+            rules={{
+              required: {
+                value: true,
+                message: "Por favor informe a data de inicio",
+              },
+            }}
+            render={({ field }) => (
+              <DatePicker
+                className="w-full"
+                placeholderText="Data de inicio"
+                errorMessage={errors.startDate?.message}
+                error={!!errors.startDate}
+                onChange={field.onChange}
+                selected={field.value}
+              />
+            )}
+            control={control}
           />
-          <DatePicker
-            className="w-full"
-            placeholderText="Data final"
-            onChange={() => {}}
+
+          <Controller
+            name="endDate"
+            rules={{
+              required: {
+                value: true,
+                message: "Por favor informe a data final",
+              },
+            }}
+            render={({ field }) => (
+              <DatePicker
+                className="w-full"
+                placeholderText="Data final"
+                errorMessage={errors.endDate?.message}
+                error={!!errors.endDate}
+                onChange={field.onChange}
+                selected={field.value}
+              />
+            )}
+            control={control}
           />
         </div>
         <Input
