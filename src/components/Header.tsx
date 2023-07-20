@@ -25,6 +25,8 @@ const header = () => {
     setOpenedMenu(!openedMenu);
   };
 
+  const handleMyTripsClick = () => {};
+
   return (
     <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center">
       {/* Uma div relative com o tamanho definido irá garantir que a imagem sempre será aquele tamanho */}
@@ -60,7 +62,13 @@ const header = () => {
             alt={data.user.name!}
           />
           {openedMenu && (
-            <div className="absolute z-20 top-14 bg-white left-0 h-full w-full p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
+            <div className="absolute  z-20 top-14 bg-white right-1 h-full w-[150px] p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
+              <Link href="/my-trips">
+                <button className="text-primary border-solid border-b border-grayLighter text-sm font-semibold">
+                  Minhas viagens
+                </button>
+              </Link>
+
               <button
                 className="text-primary text-sm font-semibold"
                 onClick={handleSignOutClick}
