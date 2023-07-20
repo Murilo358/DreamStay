@@ -10,6 +10,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import Button from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>();
@@ -18,9 +19,9 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
   const startDate = new Date(searchParams.get("startDate") as string);
   const endDate = new Date(searchParams.get("endDate") as string);
-  const guests = searchParams.get("guests");
+  const guests = Number(searchParams.get("guests"));
 
-  const { status } = useSession();
+  const { status, data } = useSession();
 
   const router = useRouter();
   useEffect(() => {
@@ -43,19 +44,47 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
       setTotalPrice(res.totalPrice);
     };
 
-    if (status === "authenticated") {
-      fetchtrip();
-    } else {
+    if (status === "unauthenticated") {
       alert("Você precisa estar logado para visualizar está página");
       router.push(`/trips/${params.tripId}`);
     }
+
+    fetchtrip();
   }, [status]);
 
   if (!trip) return null;
+  console.log(data);
+
+  const handleFinishButton = async () => {
+    const res = await fetch("http://localhost:3000/api/trips/reservation", {
+      method: "POST",
+      body: Buffer.from(
+        JSON.stringify({
+          tripId: params.tripId,
+          startDate,
+          endDate,
+          guests,
+          userId: (data?.user as any)?.id!,
+          totalPaid: totalPrice,
+        })
+      ),
+    });
+    if (!res.ok) {
+      toast.error("Oops!, ocorreu um erro", {
+        position: "bottom-center",
+      });
+    }
+    if (res.ok) {
+      toast.success("Reserva realizada com sucesso ", {
+        position: "bottom-center",
+      });
+      router.push("/");
+    }
+  };
 
   console.log({ trip });
   return (
-    <div className="container mx-auto p-5 h-screen">
+    <div className="container mx-auto p-5 ">
       <h1 className="font-semibold text-xl text-primaryDarker">Sua viagem</h1>
       {/* Card */}
       <div className="flex flex-col p-5 mt-5 border-grayLighter border-solid border shadow-lg rouded-lg">
@@ -101,7 +130,9 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
         <p className="mt-2">{guests} hóspedes</p>
       </div>
 
-      <Button className="w-full mt-5">Finalizar compra!</Button>
+      <Button onClick={handleFinishButton} className="w-full mt-5">
+        Finalizar compra!
+      </Button>
     </div>
   );
 };
