@@ -8,6 +8,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { differenceInDays } from "date-fns";
 import { start } from "repl";
+import { useRouter } from "next/navigation";
 
 interface TripReservationProps {
   tripId: string;
@@ -39,6 +40,7 @@ const TripReservation = ({
     formState: { errors },
     setError,
   } = useForm<TripReservationForm>();
+  const router = useRouter();
 
   const onSubmit = async (data: TripReservationForm) => {
     const response = await fetch("http://localhost:3000/api/trips/check", {
@@ -68,7 +70,7 @@ const TripReservation = ({
       });
     }
     if (res?.error?.code === "INVALID_START_DATE") {
-      setError("startDate", {
+      return setError("startDate", {
         type: "error",
         message: "Data inicial invalida",
       });
@@ -79,6 +81,12 @@ const TripReservation = ({
         message: "Data final invalida",
       });
     }
+
+    router.push(
+      `/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${
+        data.guests
+      }`
+    );
   };
 
   const startDate = watch("startDate");
@@ -156,11 +164,7 @@ const TripReservation = ({
           <p className="font-medium text-sm text-primaryDarker">Total: </p>
           <p className="font-medium text-sm text-primaryDarker">
             {startDate && endDate && maxGuestsInput
-              ? `R$${
-                  differenceInDays(endDate, startDate) *
-                  tripPrice *
-                  maxGuestsInput
-                },00`
+              ? `R$${differenceInDays(endDate, startDate) * tripPrice},00`
               : "R$00,00"}
           </p>
         </div>
