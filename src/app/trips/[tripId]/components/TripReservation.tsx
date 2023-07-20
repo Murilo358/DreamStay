@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { differenceInDays } from "date-fns";
 import { start } from "repl";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface TripReservationProps {
   tripId: string;
@@ -41,6 +42,8 @@ const TripReservation = ({
     setError,
   } = useForm<TripReservationForm>();
   const router = useRouter();
+
+  const { status } = useSession();
 
   const onSubmit = async (data: TripReservationForm) => {
     const response = await fetch("http://localhost:3000/api/trips/check", {
@@ -82,11 +85,15 @@ const TripReservation = ({
       });
     }
 
-    router.push(
-      `/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${
-        data.guests
-      }`
-    );
+    if (status === "authenticated") {
+      router.push(
+        `/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${
+          data.guests
+        }`
+      );
+    } else {
+      alert("Você precisa estar logado para realizar a compra");
+    }
   };
 
   const startDate = watch("startDate");

@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import ReactCountryFlag from "react-country-flag";
 import ptBR from "date-fns/locale/pt-BR";
 import Button from "@/components/Button";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>();
@@ -18,6 +20,9 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const endDate = new Date(searchParams.get("endDate") as string);
   const guests = searchParams.get("guests");
 
+  const { status } = useSession();
+
+  const router = useRouter();
   useEffect(() => {
     const fetchtrip = async () => {
       const response = await fetch(`http://localhost:3000/api/trips/check`, {
@@ -32,8 +37,14 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
       setTrip(trip);
       setTotalPrice(totalPrice);
     };
-    fetchtrip();
-  }, []);
+
+    if (status === "authenticated") {
+      fetchtrip();
+    } else {
+      alert("Você precisa estar logado para visualizar está página");
+      router.push(`/trips/${params.tripId}`);
+    }
+  }, [status]);
 
   if (!trip) return null;
 
