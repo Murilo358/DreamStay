@@ -30,16 +30,22 @@ const MyTrips = () => {
       setReservations(json);
     };
     fetchTripsReservations();
-  }, [status]);
+  }, [status, reservations]);
   console.log(reservations);
   return (
     <div className="container mx-auto p-5">
       <h1 className="text-primaryDarker text-xl font-semibold">
         Minhas viagens
       </h1>
-      {reservations.map((reservation) => (
-        <UserReservationItem key={reservation.id} reservation={reservation} />
-      ))}
+      {reservations.length > 0 ? (
+        reservations.map((reservation) => (
+          <UserReservationItem key={reservation.id} reservation={reservation} />
+        ))
+      ) : (
+        <p className="font-medium mt-3 text-center">
+          Você ainda não tem nenhuma viagem reservada :(
+        </p>
+      )}
     </div>
   );
 };
