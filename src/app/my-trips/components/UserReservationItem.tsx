@@ -7,7 +7,8 @@ import ptBR from "date-fns/locale/pt-BR";
 import { format } from "date-fns";
 import Button from "@/components/Button";
 import { toast } from "react-toastify";
-import Router from "next/router";
+
+import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 interface UserReservationItemProps {
   reservation: Prisma.TripReservationGetPayload<{
@@ -20,19 +21,38 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    const res = await fetch(`/api/trips/reservation/${reservation.id}`, {
-      method: "DELETE",
+    const result = await Swal.fire({
+      title: "Você tem certeza?",
+      text: "Você não poderá reverter isso",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Sim, cancelar!",
     });
 
-    if (!res.ok) {
-      toast.error("Erro ao cancelada a viagem, tente novamente mais tarde", {
-        position: "bottom-center",
-      });
-    }
-    if (res.ok) {
-      toast.success("Viagem cancelada com sucesso", {
-        position: "bottom-center",
-      });
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`/api/trips/reservation/${reservation.id}`, {
+          method: "DELETE",
+        });
+
+        if (!res.ok) {
+          toast.error("Erro ao cancelar a viagem, tente novamente mais tarde", {
+            position: "bottom-center",
+          });
+        } else {
+          toast.success("Viagem cancelada com sucesso", {
+            position: "bottom-center",
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao realizar a requisição:", error);
+        toast.error("Erro ao cancelar a viagem, tente novamente mais tarde", {
+          position: "bottom-center",
+        });
+      }
     }
   };
 
