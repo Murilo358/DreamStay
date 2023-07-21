@@ -1,12 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import UserReservationItem from "./components/UserReservationItem";
+import { Prisma } from "@prisma/client";
 const MyTrips = () => {
   const { status, data } = useSession();
 
   const router = useRouter();
+  const [reservations, setReservations] = useState<
+    Prisma.TripReservationGetPayload<{
+      include: { trip: true };
+    }>[]
+  >([]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -20,12 +27,21 @@ const MyTrips = () => {
         `http://localhost:3000/api/user/${(data?.user as any)?.id}/trips`
       );
       const json = await response.json();
-      console.log(json);
+      setReservations(json);
     };
     fetchTripsReservations();
   }, [status]);
-
-  return <div>MyTrips</div>;
+  console.log(reservations);
+  return (
+    <div className="container mx-auto p-5">
+      <h1 className="text-primaryDarker text-xl font-semibold">
+        Minhas viagens
+      </h1>
+      {reservations.map((reservation) => (
+        <UserReservationItem key={reservation.id} reservation={reservation} />
+      ))}
+    </div>
+  );
 };
 
 export default MyTrips;

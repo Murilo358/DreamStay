@@ -13,6 +13,9 @@ export async function POST(request: Request) {
     },
   });
 
+  console.log("ASAAAAAAAAAAAAA");
+  console.log({ trip });
+
   if (!trip) {
     return new NextResponse(
       JSON.stringify({
@@ -50,7 +53,7 @@ export async function POST(request: Request) {
 
   const reservations = await prisma.tripReservation.findMany({
     where: {
-      tripId: req.id,
+      tripId: req.tripId,
       startDate: {
         lte: new Date(req.endDate),
       },
