@@ -30,8 +30,8 @@ const MyTrips = () => {
       setReservations(json);
     };
     fetchTripsReservations();
-  }, [status, reservations]);
-  console.log(reservations);
+  }, [status]);
+
   return (
     <div className="container mx-auto p-5">
       <h1 className="text-primaryDarker text-xl font-semibold">

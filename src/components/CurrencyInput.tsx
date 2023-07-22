@@ -23,6 +23,7 @@ function CurrencyInput({
     <div className="flex w-full flex-col">
       <_CurrencyInput
         lang="pt-BR"
+        type={"currency"}
         className={inputClassName}
         intlConfig={{ locale: "pt-BR", currency: "BRL" }}
         {...props}

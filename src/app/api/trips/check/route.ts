@@ -13,9 +13,6 @@ export async function POST(request: Request) {
     },
   });
 
-  console.log("ASAAAAAAAAAAAAA");
-  console.log({ trip });
-
   if (!trip) {
     return new NextResponse(
       JSON.stringify({

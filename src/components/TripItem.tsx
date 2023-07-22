@@ -10,8 +10,8 @@ interface TripProps {
 
 const TripItem = ({ trip }: TripProps) => {
   return (
-    <Link href={`trips/${trip.id}`}>
-      <div className="flex flex-col shadow-md p-2 ">
+    <Link href={`/trips/${trip.id}`}>
+      <div className="flex flex-col shadow-md p-2  ">
         <div className="relative h-[280px] w-[280px]">
           <Image
             className="rounded-lg object-cover"
