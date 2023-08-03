@@ -10,6 +10,7 @@ import { differenceInDays } from "date-fns";
 import { start } from "repl";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 interface TripReservationProps {
   tripId: string;
@@ -46,6 +47,7 @@ const TripReservation = ({
   const { status } = useSession();
 
   const onSubmit = async (data: TripReservationForm) => {
+    console.log(data);
     const response = await fetch("http://localhost:3000/api/trips/check", {
       method: "POST",
       body: Buffer.from(
@@ -92,7 +94,9 @@ const TripReservation = ({
         }`
       );
     } else {
-      alert("Você precisa estar logado para realizar a compra");
+      toast.error("Oops, você precisa estar logado!", {
+        position: "bottom-center",
+      });
     }
   };
 

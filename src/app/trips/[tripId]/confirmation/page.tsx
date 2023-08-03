@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>();
@@ -50,35 +51,45 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     }
 
     fetchtrip();
-  }, [status]);
+  }, [status, searchParams, params, router]);
 
   if (!trip) return null;
-  console.log(data);
 
   const handleFinishButton = async () => {
-    const res = await fetch("http://localhost:3000/api/trips/reservation", {
+    const res = await fetch("http://localhost:3000/api/payment", {
       method: "POST",
       body: Buffer.from(
         JSON.stringify({
           tripId: params.tripId,
           startDate,
+          name: trip.name,
           endDate,
           guests,
-          userId: (data?.user as any)?.id!,
-          totalPaid: totalPrice,
+          totalPrice,
+          coverImage: trip.coverImage,
         })
       ),
     });
+
     if (!res.ok) {
       toast.error("Oops!, ocorreu um erro", {
         position: "bottom-center",
       });
     }
     if (res.ok) {
+      const { sessionId } = await res.json();
+
+      //Carrega o stripe atraves da public key
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_KEY as string
+      );
+      //Redireciona para a tela de chekout
+      await stripe?.redirectToCheckout({ sessionId });
+
       toast.success("Reserva realizada com sucesso ", {
         position: "bottom-center",
       });
-      router.push("/");
+      // router.push("/");
     }
   };
 

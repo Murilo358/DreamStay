@@ -34,13 +34,18 @@ const MyTrips = () => {
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-primaryDarker text-xl font-semibold">
-        Minhas viagens
-      </h1>
       {reservations.length > 0 ? (
-        reservations.map((reservation) => (
-          <UserReservationItem key={reservation.id} reservation={reservation} />
-        ))
+        <>
+          <h1 className="text-primaryDarker text-xl font-semibold">
+            Minhas viagens
+          </h1>
+          {reservations.map((reservation) => (
+            <UserReservationItem
+              key={reservation.id}
+              reservation={reservation}
+            />
+          ))}
+        </>
       ) : (
         <p className="font-medium mt-3 text-center">
           Você ainda não tem nenhuma viagem reservada :(
