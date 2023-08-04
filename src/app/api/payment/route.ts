@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   } = req;
 
   const session = await stripe.checkout.sessions.create({
-    success_url: process.env.HOST_URL!,
+    success_url: "https://dreamstay.vercel.app",
     metadata: {
       startDate,
       endDate,
