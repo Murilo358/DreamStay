@@ -47,7 +47,6 @@ const TripReservation = ({
   const { status } = useSession();
 
   const onSubmit = async (data: TripReservationForm) => {
-    console.log(data);
     const response = await fetch("http://localhost:3000/api/trips/check", {
       method: "POST",
       body: Buffer.from(
