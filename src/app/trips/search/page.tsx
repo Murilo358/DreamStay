@@ -46,7 +46,7 @@ const Trips = () => {
           </h3>
 
           {trips.map((trip) => (
-            <TripItem key={trip.id} trip={trip} />
+            <TripItem key={trip} trip={trip} />
           ))}
         </>
       ) : !loading && trips.length === 0 ? (
