@@ -5,7 +5,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import React, { useState } from "react";
 import Link from "next/link";
 
-const header = () => {
+const Header = () => {
   //Usar uma função para handle login melhora a performace
   //Faz com que a função não seja inline do botão
   const handleLoginClick = () => {
@@ -84,4 +84,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;
