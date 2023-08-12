@@ -9,12 +9,12 @@ interface TripLocationProps {
 
 const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
   return (
-    <div className="px-3 flex flex-col">
+    <div className="px-3 lg:p-0 flex flex-col">
       {" "}
-      <h2 className="font-semibold mt-3 mb-5 text-primaryDarker ">
+      <h2 className="font-semibold  lg:text-xl mt-3 mb-5 text-primaryDarker ">
         Localização
       </h2>
-      <div className=" items-center relative w-full h-[266px]">
+      <div className=" items-center relative w-full h-[266px] lg:hidden">
         <Image
           className="object-cover rounded-lg shadow-md"
           src="/Map-mobile.png"
@@ -22,10 +22,18 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
           fill
         />
       </div>
-      <p className="text-primaryDarker text-sm font-semibold mt-3">
+      <div className=" items-center relative w-full hidden lg:block h-[480px]">
+        <Image
+          className="object-cover rounded-lg shadow-md"
+          src="/Map-desktop.png"
+          alt={location}
+          fill
+        />
+      </div>
+      <p className="text-primaryDarker lg:text-base text-sm font-semibold mt-3">
         {location}
       </p>
-      <p className="text-grayPrimary text-xs leading-5">
+      <p className="text-grayPrimary lg:text-base  text-xs leading-5">
         {locationDescription}
       </p>
       <Button variant="outlined" className="mt-5 w-full">
