@@ -39,12 +39,14 @@ const MyTrips = () => {
           <h1 className="text-primaryDarker text-xl font-semibold">
             Minhas viagens
           </h1>
-          {reservations.map((reservation) => (
-            <UserReservationItem
-              key={reservation.id}
-              reservation={reservation}
-            />
-          ))}
+          <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-10">
+            {reservations.map((reservation) => (
+              <UserReservationItem
+                key={reservation.id}
+                reservation={reservation}
+              />
+            ))}
+          </div>
         </>
       ) : (
         <p className="font-medium mt-3 text-center">
