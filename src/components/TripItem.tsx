@@ -12,7 +12,7 @@ const TripItem = ({ trip }: TripProps) => {
   return (
     <Link href={`/trips/${trip.id}`}>
       <div className="flex flex-col shadow-md p-2 items-center">
-        <div className="relative h-[280px] w-[280px] lg:w-[9P0%]">
+        <div className="relative h-[280px] w-[280px] ">
           <Image
             className="rounded-lg object-cover"
             fill

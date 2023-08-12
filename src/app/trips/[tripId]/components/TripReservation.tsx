@@ -105,7 +105,10 @@ const TripReservation = ({
 
   return (
     <div>
-      <div className="flex flex-col px-5">
+      <div className="flex flex-col px-5 lg:min-w-[380px] lg:p-5 lg:border-grayLighter lg-border lg:rounded lg:shadow-md">
+        <p className="hidden lg:block text-xl text-primaryDarker mb-4 ">
+          <span className="font-semibold">R${tripPrice} por dia</span>
+        </p>
         <div className="flex gap-4 ">
           <Controller
             name="startDate"
@@ -179,7 +182,7 @@ const TripReservation = ({
           </p>
         </div>
         <div
-          className=" pb-10 border-b border-grayLighter
+          className=" pb-10 border-b lg:border-none border-grayLighter
         "
         >
           <Button

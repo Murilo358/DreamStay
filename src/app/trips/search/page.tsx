@@ -38,16 +38,17 @@ const Trips = () => {
       )}
       {!loading && trips.length > 0 ? (
         <>
-          <h1 className="  font-medium text-xl text-primaryDarker ">
-            Hospedagens encontradas
+          <h1 className="  font-medium text-xl text-primaryDarker lg:text-3xl ">
+            Hospedagens encontradas para "{text}"
           </h1>
-          <h3 className="text-grayPrimary">
+          <h3 className="text-grayPrimary lg:text-2xl">
             Listamos os melhores locais para você
           </h3>
-
-          {trips.map((trip) => (
-            <TripItem key={trip} trip={trip} />
-          ))}
+          <div className="flex flex-col items-center  gap-6 lg:flex-row lg:flex-wrap lg:justify-center lg:gap-10  mt-5 lg:mt-10">
+            {trips.map((trip) => (
+              <TripItem key={trip} trip={trip} />
+            ))}
+          </div>
         </>
       ) : !loading && trips.length === 0 ? (
         <p className="mt-3 font-medium text-primaryDarker">
