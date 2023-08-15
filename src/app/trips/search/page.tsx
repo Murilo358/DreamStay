@@ -29,7 +29,7 @@ const Trips = () => {
     };
 
     fetchtrips();
-  }, []);
+  }, [budget, endDate, text]);
 
   return (
     <div className="container mx-auto flex min-h-screen flex-col items-center gap-5 ">
