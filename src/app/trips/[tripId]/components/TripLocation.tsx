@@ -14,7 +14,7 @@ interface TripLocationProps {
 const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
   const newLocation = location.split(" ").join("_");
 
-  const [positions, setpositions] = useState();
+  const [positions, setpositions] = useState({ lat: 0, lng: 0 });
 
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
