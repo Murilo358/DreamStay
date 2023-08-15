@@ -14,23 +14,23 @@ interface TripLocationProps {
 const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
   const newLocation = location.split(" ").join("_");
 
-  const [position, setposition] = useState();
+  const [positions, setpositions] = useState();
 
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: googleApiKey,
+    googleMapsApiKey: googleApiKey ? googleApiKey : "",
   });
 
   useEffect(() => {
-    async function getPosition(location: string) {
+    async function getPositions(location: string) {
       console.log(googleApiKey);
       const res = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${googleApiKey}`
       );
       const data = await res.json();
-      setposition(data.results[0].geometry.location);
+      setpositions(data.results[0].geometry.location);
     }
 
     // async function getPlaceDescription(location: string) {
@@ -41,7 +41,7 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
     //   console.log(data);
     // }
     // getPlaceDescription(newLocation);
-    getPosition(location);
+    getPositions(location);
   }, []);
 
   return (
@@ -54,10 +54,10 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
         {isLoaded ? (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
-            center={position}
+            center={positions}
             zoom={15}
           >
-            <Marker position={position}></Marker>
+            <Marker position={positions}></Marker>
           </GoogleMap>
         ) : (
           <></>
@@ -67,10 +67,10 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
         {isLoaded ? (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
-            center={position}
+            center={positions}
             zoom={15}
           >
-            <Marker position={position}></Marker>
+            <Marker position={positions}></Marker>
           </GoogleMap>
         ) : (
           <></>
