@@ -29,7 +29,7 @@ const Trips = () => {
     };
 
     fetchtrips();
-  }, [budget, endDate, text]);
+  }, []);
 
   return (
     <div className="container mx-auto flex min-h-screen flex-col items-center gap-5 ">
@@ -39,7 +39,7 @@ const Trips = () => {
       {!loading && trips.length > 0 ? (
         <>
           <h1 className="  font-medium text-xl text-primaryDarker lg:text-3xl ">
-            Hospedagens encontradas para "{text}"
+            Hospedagens encontradas para {text}
           </h1>
           <h3 className="text-grayPrimary lg:text-2xl">
             Listamos os melhores locais para você
