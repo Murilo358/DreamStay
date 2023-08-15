@@ -1,6 +1,10 @@
+"use client";
+
 import Button from "@/components/Button";
 import Image from "next/image";
-import React from "react";
+import { useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+// https://pt.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles=NOME_DA_CIDADE
 
 interface TripLocationProps {
   location: string;
@@ -8,6 +12,38 @@ interface TripLocationProps {
 }
 
 const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
+  const newLocation = location.split(" ").join("_");
+
+  const [position, setposition] = useState();
+
+  const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: googleApiKey,
+  });
+
+  useEffect(() => {
+    async function getPosition(location: string) {
+      console.log(googleApiKey);
+      const res = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${googleApiKey}`
+      );
+      const data = await res.json();
+      setposition(data.results[0].geometry.location);
+    }
+
+    // async function getPlaceDescription(location: string) {
+    //   const res = await fetch(
+    //     `https://pt.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles=${newLocation}`
+    //   );
+    //   const data = await res.json();
+    //   console.log(data);
+    // }
+    // getPlaceDescription(newLocation);
+    getPosition(location);
+  }, []);
+
   return (
     <div className="px-3 lg:p-0 flex flex-col">
       {" "}
@@ -15,20 +51,30 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
         Localização
       </h2>
       <div className=" items-center relative w-full h-[266px] lg:hidden">
-        <Image
-          className="object-cover rounded-lg shadow-md"
-          src="/Map-mobile.png"
-          alt={location}
-          fill
-        />
+        {isLoaded ? (
+          <GoogleMap
+            mapContainerStyle={{ width: "100%", height: "100%" }}
+            center={position}
+            zoom={15}
+          >
+            <Marker position={position}></Marker>
+          </GoogleMap>
+        ) : (
+          <></>
+        )}
       </div>
       <div className=" items-center relative w-full hidden lg:block h-[480px]">
-        <Image
-          className="object-cover rounded-lg shadow-md"
-          src="/Map-desktop.png"
-          alt={location}
-          fill
-        />
+        {isLoaded ? (
+          <GoogleMap
+            mapContainerStyle={{ width: "100%", height: "100%" }}
+            center={position}
+            zoom={15}
+          >
+            <Marker position={position}></Marker>
+          </GoogleMap>
+        ) : (
+          <></>
+        )}
       </div>
       <p className="text-primaryDarker lg:text-base text-sm font-semibold mt-3">
         {location}

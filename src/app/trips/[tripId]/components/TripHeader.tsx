@@ -30,7 +30,7 @@ const TripHeader = ({ trip }: TripHeaderProps) => {
         </div>
         <div className="relative h-[300px]  w-full">
           <Image
-            src={trip?.imagesUrl[0]}
+            src={trip.imagesUrl[0] ? trip.imagesUrl[0] : "/image-not-found.jpg"}
             className="object-cover"
             fill
             alt={trip?.name}
@@ -38,7 +38,7 @@ const TripHeader = ({ trip }: TripHeaderProps) => {
         </div>
         <div className="relative h-[300px]  w-full">
           <Image
-            src={trip?.imagesUrl[1]}
+            src={trip.imagesUrl[1] ? trip.imagesUrl[1] : "/image-not-found.jpg"}
             className="object-cover"
             fill
             alt={trip?.name}
@@ -46,7 +46,7 @@ const TripHeader = ({ trip }: TripHeaderProps) => {
         </div>
         <div className="relative h-[300px]  w-full">
           <Image
-            src={trip?.imagesUrl[2]}
+            src={trip.imagesUrl[2] ? trip.imagesUrl[2] : "/image-not-found.jpg"}
             className="object-cover"
             fill
             alt={trip?.name}
@@ -54,7 +54,9 @@ const TripHeader = ({ trip }: TripHeaderProps) => {
         </div>
         <div className="relative h-[300px]  w-full">
           <Image
-            src={trip?.coverImage}
+            src={
+              trip?.imagesUrl[3] ? trip?.imagesUrl[3] : "/image-not-found.jpg"
+            }
             className="object-cover"
             fill
             alt={trip?.name}

@@ -26,7 +26,7 @@ const Header = () => {
   };
 
   return (
-    <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center">
+    <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center border-b border-grayLighter">
       {/* Uma div relative com o tamanho definido irá garantir que a imagem sempre será aquele tamanho */}
       {/* Lembrar de passar o fill como propriedadae */}
 
