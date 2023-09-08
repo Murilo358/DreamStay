@@ -86,7 +86,7 @@ const TripHighLights = ({
           className="rounded-full border-none p-3"
           placeholder="Novo destaque"
           type="text"
-          onChange={(e) => setNewHighLights(e.target.value)}
+          onChange={(e) => setNewHighLights(e?.target?.value)}
         />
         <button
           onClick={handleClick}

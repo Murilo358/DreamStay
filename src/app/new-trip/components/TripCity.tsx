@@ -39,14 +39,14 @@ const TripCity = ({ setCitysSelected, setCountryCode }: TripOptionProps) => {
         const latLng = new window.google.maps.LatLng(lat, lng);
 
         geocoder.geocode({ location: latLng }, (results, status) => {
-          if (status === "OK" && results.length > 0) {
+          if (status === "OK" && results && results.length > 0) {
             const countryComponent = results.find((result) =>
               result.types.includes("country")
             );
             if (countryComponent) {
               const countryCode = countryComponent.address_components.find(
                 (component) => component.types.includes("country")
-              ).short_name;
+              )?.short_name;
               setCountryCode(countryCode);
             }
           }
