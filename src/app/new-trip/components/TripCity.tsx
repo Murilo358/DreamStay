@@ -27,7 +27,9 @@ const TripCity = ({ setCitysSelected, setCountryCode }: TripOptionProps) => {
 
   const handlePlaceSelect = () => {
     if (autocomplete !== null) {
-      const place = autocomplete.getPlace();
+      const place = (
+        autocomplete as google.maps.places.Autocomplete
+      ).getPlace();
       if (place.geometry) {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
