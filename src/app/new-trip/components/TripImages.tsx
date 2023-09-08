@@ -12,8 +12,8 @@ interface tripImagesProps {
 }
 
 const TripImages = ({ setUploadedImages }: tripImagesProps) => {
-  const [images, setImages] = useState([]);
-  const [addedImages, setAddedImages] = useState([]);
+  const [images, setImages] = useState<File[]>([]);
+  const [addedImages, setAddedImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [disabledButton, setdisabledButton] = useState(false);
 
@@ -42,7 +42,7 @@ const TripImages = ({ setUploadedImages }: tripImagesProps) => {
         setdisabledButton(false);
       });
 
-    setUploadedImages((prevImages) => [...prevImages, data.url]);
+    setUploadedImages((prevImages: any) => [...prevImages, data.url]);
     setLoading(false);
   }
 
@@ -57,29 +57,32 @@ const TripImages = ({ setUploadedImages }: tripImagesProps) => {
   };
 
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: File[]) => {
       acceptedFiles.forEach((file: File) => {
         const reader = new FileReader();
         reader.onload = () => {
-          const base64String = reader.result.split(",")[1];
+          if (typeof reader.result === "string") {
+            // Verifique se reader.result é uma string
+            const base64String = reader.result.split(",")[1];
 
-          if (addedImages.includes(base64String)) {
-            toast.error("Oops, essa imagem já foi adicionada!", {
-              position: "bottom-center",
-            });
-          } else if (images.length === 5) {
-            toast.error("Oops, nós aceitamos apenas 5 imagens!", {
-              position: "bottom-center",
-            });
-          } else {
-            setAddedImages((prevImages) => [...prevImages, base64String]);
-            setImages((prevImages) => [...prevImages, file]);
+            if (addedImages.includes(base64String)) {
+              toast.error("Oops, essa imagem já foi adicionada!", {
+                position: "bottom-center",
+              });
+            } else if (images.length === 5) {
+              toast.error("Oops, nós aceitamos apenas 5 imagens!", {
+                position: "bottom-center",
+              });
+            } else {
+              setAddedImages((prevImages) => [...prevImages, base64String]);
+              setImages((prevImages) => [...prevImages, file]);
+            }
           }
         };
         reader.readAsDataURL(file);
       });
     },
-    [addedImages]
+    [addedImages, images]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
