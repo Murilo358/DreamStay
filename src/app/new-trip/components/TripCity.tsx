@@ -30,7 +30,7 @@ const TripCity = ({ setCitysSelected, setCountryCode }: TripOptionProps) => {
       const place = (
         autocomplete as google.maps.places.Autocomplete
       ).getPlace();
-      if (place.geometry) {
+      if (place.geometry && place.geometry.location) {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
         setPositions({ lat, lng });
