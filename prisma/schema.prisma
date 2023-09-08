@@ -30,6 +30,8 @@ model Trip {
   reservations        TripReservation[] //NÃO É SALVO NO BANCO
   countryCode         String
   recommended         Boolean           @default(false)
+  lat                 String         
+  lng                 String          
 }
 
 model TripReservation {

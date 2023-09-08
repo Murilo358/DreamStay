@@ -1,20 +1,28 @@
 "use client";
 
 import Button from "@/components/Button";
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-// https://pt.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles=NOME_DA_CIDADE
 
 interface TripLocationProps {
   location: string;
   locationDescription: string;
+  lat: string;
+  lng: string;
 }
 
-const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
-  const newLocation = location.split(" ").join("_");
+const TripLocation = ({
+  location,
+  locationDescription,
+  lat,
+  lng,
+}: TripLocationProps) => {
+  const newLocation = location.replaceAll(",", "").split(" ")[0];
 
   const [positions, setpositions] = useState({ lat: 0, lng: 0 });
+  const [placeDescription, setPlaceDescription] = useState();
 
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
@@ -25,7 +33,6 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
 
   useEffect(() => {
     async function getPositions(location: string) {
-      console.log(googleApiKey);
       const res = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${googleApiKey}`
       );
@@ -33,15 +40,30 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
       setpositions(data.results[0].geometry.location);
     }
 
-    // async function getPlaceDescription(location: string) {
-    //   const res = await fetch(
-    //     `https://pt.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles=${newLocation}`
-    //   );
-    //   const data = await res.json();
-    //   console.log(data);
-    // }
-    // getPlaceDescription(newLocation);
-    getPositions(location);
+    async function getPlaceDescription(location: string) {
+      try {
+        const response = await fetch(
+          `https://pt.wikipedia.org/api/rest_v1/page/summary/${location}`
+        );
+        const data = await response.json();
+
+        if (data.extract) {
+          const description = data.extract;
+          setPlaceDescription(description);
+        } else {
+          console.error("Description not found");
+        }
+      } catch (error) {
+        console.error("Error fetching place description:", error);
+      }
+    }
+    if ((lat && lng == null) || undefined || "") {
+      getPositions(location);
+    } else {
+      setpositions({ lat: Number(lat), lng: Number(lng) });
+    }
+
+    getPlaceDescription(newLocation);
   }, []);
 
   return (
@@ -80,11 +102,15 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
         {location}
       </p>
       <p className="text-grayPrimary lg:text-base  text-xs leading-5">
-        {locationDescription}
+        {placeDescription ? placeDescription : "Descrição não encontrada"}
       </p>
-      <Button variant="outlined" className="mt-5 w-full">
-        Ver no google maps
-      </Button>
+      <a
+        href={`https://www.google.com/maps?q=${positions.lat},${positions.lng}`}
+      >
+        <Button variant="outlined" className="mt-5 w-full">
+          Ver no google maps
+        </Button>
+      </a>
     </div>
   );
 };

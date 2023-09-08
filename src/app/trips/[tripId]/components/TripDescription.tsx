@@ -7,7 +7,7 @@ interface TripDescriptionProps {
 
 const TripDescription = ({ trip }: TripDescriptionProps) => {
   return (
-    <div className="p-3">
+    <div className="p-3 lg:min-w-[700px]">
       <h3 className="font-semibold mt-3 lg:text-xl text-primaryDarker">
         {" "}
         Sobre a viagem

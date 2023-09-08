@@ -23,7 +23,6 @@ interface TripReservationProps {
 interface TripReservationForm {
   guests: number;
   startDate: Date | null;
-
   endDate: Date | null;
 }
 

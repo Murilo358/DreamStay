@@ -60,13 +60,21 @@ const Header = () => {
             alt={data.user.name!}
           />
           {openedMenu && (
-            <div className="absolute  z-20 top-14 bg-white right-1 h-full w-[150px] p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
+            <div className="absolute  z-20 top-14 bg-white right-1  w-[150px] p-2 border-solid border-grayPrimary shadow-md flex flex-col justify-center items-center rounded-lg">
               <Link href="/my-trips">
                 <button
                   onClick={handleMenuClick}
                   className="text-primary border-solid border-b border-grayLighter text-sm font-semibold"
                 >
                   Minhas viagens
+                </button>
+              </Link>
+              <Link href="/new-trip">
+                <button
+                  onClick={handleMenuClick}
+                  className="text-primary border-solid border-b border-grayLighter text-sm font-semibold"
+                >
+                  Nova viagem
                 </button>
               </Link>
 
