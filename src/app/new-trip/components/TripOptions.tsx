@@ -2,7 +2,7 @@ import React from "react";
 import TripOption from "./TripOption";
 import Input from "@/components/Input";
 
-const TripOptions = ({ setOptionsSelected }) => {
+const TripOptions = ({ setOptionsSelected }: any) => {
   return (
     <>
       <h1

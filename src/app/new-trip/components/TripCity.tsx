@@ -17,7 +17,8 @@ const TripCity = ({ setCitysSelected, setCountryCode }: TripOptionProps) => {
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const [positions, setPositions] = useState({ lat: 0, lng: 0 });
   const [cityName, setCityName] = useState("");
-  const [autocomplete, setAutocomplete] = useState(null);
+  const [autocomplete, setAutocomplete] =
+    React.useState<google.maps.places.Autocomplete | null>(null);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -55,21 +56,21 @@ const TripCity = ({ setCitysSelected, setCountryCode }: TripOptionProps) => {
     }
   };
 
-  const handleMarkerDragEnd = (event) => {
+  const handleMarkerDragEnd = (event: any) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
     setPositions({ lat, lng });
   };
 
   useEffect(() => {
-    const successCallback = (position) => {
+    const successCallback = (position: any) => {
       setPositions({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
     };
 
-    const errorCallback = (error) => {};
+    const errorCallback = (error: any) => {};
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
   }, []);

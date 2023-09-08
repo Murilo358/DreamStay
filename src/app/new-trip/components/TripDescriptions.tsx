@@ -110,8 +110,8 @@ const TripDescriptions = ({ setDescriptions, createTrip }: any) => {
           })}
           className="mt-3"
           placeholder="Descrição "
-          cols="30"
-          rows="10"
+          cols={30}
+          rows={10}
           error={!!errors?.description}
           errorMessage={errors?.description?.message}
         />

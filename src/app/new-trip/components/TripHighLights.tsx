@@ -16,7 +16,7 @@ const TripHighLights = ({
   setHighLights,
   setHighLightsSelected,
 }: TripHighLightsProps) => {
-  const [newHighLight, setNewHighLights] = useState();
+  const [newHighLight, setNewHighLights] = useState("");
 
   const handleClick = () => {
     if (highLights.includes(newHighLight)) {
