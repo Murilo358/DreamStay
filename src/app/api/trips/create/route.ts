@@ -32,8 +32,8 @@ export async function POST(request: Request) {
       maxGuests: parseInt(descriptions.guests),
       countryCode: countryCode,
       recommended: true,
-      lat: citysSelected.positions.lat,
-      lng: citysSelected.positions.lng,
+      lat: citysSelected.positions.lat.toString(),
+      lng: citysSelected.positions.lng.toString(),
     },
   });
 

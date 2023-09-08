@@ -1,11 +1,11 @@
 "use client";
 
-import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import AOS from "aos";
 import TripOptions from "./components/TripOptions";
 import TripCity from "./components/TripCity";
 import TripHighLights from "./components/TripHighLights";
