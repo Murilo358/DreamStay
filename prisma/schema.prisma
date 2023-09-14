@@ -29,7 +29,7 @@ model Trip {
   //Referencia para o prisma para dizer que uma Trip pode ter varias reservas
   reservations        TripReservation[] //NÃO É SALVO NO BANCO
   countryCode         String
-  recommended         Boolean           @default(false)
+  recommended         Boolean           @default(true)
   lat                 String         
   lng                 String          
 }
