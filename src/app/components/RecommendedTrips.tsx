@@ -4,12 +4,8 @@ import { Trip } from "@prisma/client";
 import React, { useState } from "react";
 
 async function getTrips() {
-  const trips = await prisma.trip.findMany({
-    where: {
-      recommended: true,
-    },
-  });
-
+  const trips = await prisma.trip.findMany();
+  console.log(trips);
   return trips;
 }
 
