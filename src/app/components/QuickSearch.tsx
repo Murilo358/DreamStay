@@ -9,6 +9,7 @@ import "swiper/css/free-mode";
 import "swiper/css/scrollbar";
 
 const QuickSearch = () => {
+
   return (
     <div className="container mx-auto p-5 ">
       <div className="flex items-center">
