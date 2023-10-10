@@ -10,18 +10,18 @@ import { spawn } from "child_process";
 export async function POST(request: Request) {
   const req = await request.json();
     
-  const generatePrisma = () => {
-    const prismaMigrate = spawn("npx", ["prisma", "migrate", "deploy"], {
-      stdio: "inherit",
-    });
-
-    prismaMigrate.on("close", (code) => {
-      if (code === 0) {
-        console.log("Prisma generation completed successfully.");
-      } else {
-        console.error(`Prisma generation failed with code ${code}.`);
-      }
-    });
+  const generatePrisma = async () => {
+    try {
+      await prismaa.$connect();
+      await prismaa.$executeRaw`PRISMA MIGRATE DEPLOY \--preview-feature  `;
+      await prismaa.$executeRaw`PRISMA GENERATE`;
+      await prismaa.$executeRaw`PRISMA DB PULL`;
+      console.log("Prisma migration completed successfully.");
+    } catch (error) {
+      console.error("Prisma migration failed:", error);
+    } finally {
+      await prismaa.$disconnect();
+    }
   };
 
   const {
