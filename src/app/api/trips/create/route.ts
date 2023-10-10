@@ -8,7 +8,21 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const req = await request.json();
+    
+   const generatePrisma = () => {
+    const prismaGenerate = spawn("npx", ["prisma", "generate"], {
+      stdio: "inherit",
+    });
 
+    prismaGenerate.on("close", (code) => {
+      if (code === 0) {
+        console.log("Prisma generation completed successfully.");
+      } else {
+        console.error(`Prisma generation failed with code ${code}.`);
+      }
+    });
+  };
+  
   const {
     citysSelected,
     highLights,
@@ -36,6 +50,8 @@ export async function POST(request: Request) {
       lng: citysSelected.positions.lng.toString(),
     },
   });
+
+  generatePrisma();
 
   return new NextResponse(
     JSON.stringify({
