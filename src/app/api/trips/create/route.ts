@@ -12,15 +12,15 @@ export async function POST(request: Request) {
     
   const generatePrisma = async () => {
     try {
-      await prismaa.$connect();
-      await prismaa.$executeRaw`PRISMA MIGRATE DEPLOY \--preview-feature  `;
-      await prismaa.$executeRaw`PRISMA GENERATE`;
-      await prismaa.$executeRaw`PRISMA DB PULL`;
+      await prisma.$connect();
+      await prisma.$executeRaw`PRISMA MIGRATE DEPLOY \--preview-feature  `;
+      await prisma.$executeRaw`PRISMA GENERATE`;
+      await prisma.$executeRaw`PRISMA DB PULL`;
       console.log("Prisma migration completed successfully.");
     } catch (error) {
       console.error("Prisma migration failed:", error);
     } finally {
-      await prismaa.$disconnect();
+      await prisma.$disconnect();
     }
   };
 
