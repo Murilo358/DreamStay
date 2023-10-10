@@ -10,27 +10,11 @@ import { spawn } from "child_process";
 export async function POST(request: Request) {
   const req = await request.json();
     
- const generatePrisma = () => {
-    const prismaGenerate = spawn("npx", ["prisma", "generate"], {
-      stdio: "inherit",
-    });
+  const generatePrisma = () => {
     const prismaMigrate = spawn("npx", ["prisma", "migrate", "deploy"], {
       stdio: "inherit",
     });
-    const prismaPull = spawn("npx", ["prisma", "db", "pull"], {
-      stdio: "inherit",
-    });
 
-
-    prismaGenerate.on("close", (code) => {
-      if (code === 0) {
-        console.log("Prisma generation completed successfully.");
-      } else {
-        console.error(`Prisma generation failed with code ${code}.`);
-      }
-    });
-
-    
     prismaMigrate.on("close", (code) => {
       if (code === 0) {
         console.log("Prisma generation completed successfully.");
@@ -38,17 +22,8 @@ export async function POST(request: Request) {
         console.error(`Prisma generation failed with code ${code}.`);
       }
     });
-
-
-    
-    prismaPull.on("close", (code) => {
-      if (code === 0) {
-        console.log("Prisma generation completed successfully.");
-      } else {
-        console.error(`Prisma generation failed with code ${code}.`);
-      }
-    });
   };
+
   const {
     citysSelected,
     highLights,
