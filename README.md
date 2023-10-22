@@ -34,7 +34,7 @@ O DreamStay é um website de viagens desenvolvido com a tecnologia Next.js e con
 ## Ferramentas-utilizadas
 
  ![React](https://img.shields.io/badge/-React-0D1117?style=for-the-badge&logo=react&logoColor=61DAFB&labelColor=transparent)&nbsp;
- ![HTML](https://img.shields.io/badge/-html-0D1117?style=for-the-badge&logo=html&logoColor=61DAFB&labelColor=transparent)&nbsp;
+ ![HTML](https://img.shields.io/badge/-html-0D1117?style=for-the-badge&logo=html5&logoColor=61DAFB&labelColor=transparent)&nbsp;
   ![Tailwind](https://img.shields.io/badge/-CSS-0D1117?style=for-the-badge&logo=CSS3&logoColor=1572B6&labelColor=0D1117)&nbsp;
   ![Typescript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)&nbsp;
   ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)&nbsp;
