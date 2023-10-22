@@ -6,6 +6,10 @@ interface TripHighLightsOptionProps {
   highLights?: any;
   setHighLights?: any;
   added?: boolean;
+  defaults?: boolean;
+  disabled?: boolean;
+  setInitialHighlights: any;
+  initialHighlights: any;
 }
 
 const TripHighLightsOption: React.FC<TripHighLightsOptionProps> = ({
@@ -13,11 +17,25 @@ const TripHighLightsOption: React.FC<TripHighLightsOptionProps> = ({
   highLights,
   text,
   added,
+  defaults,
+  disabled,
+  setInitialHighlights,
+  initialHighlights,
 }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = () => {
     if (highLights.includes(text)) {
+      if (
+        highLights.includes(text) &&
+        initialHighlights.find((e: any) => e.text === text)
+          ? true
+          : false
+      ) {
+        initialHighlights.filter((highlight: any) =>
+          highlight.text == text ? (highlight.disabled = false) : highlight
+        );
+      }
       setHighLights(
         highLights.filter((highlight: string) => highlight !== text)
       );
@@ -25,15 +43,20 @@ const TripHighLightsOption: React.FC<TripHighLightsOptionProps> = ({
     } else {
       setHighLights([...highLights, text]);
       setSelected(true);
+      setInitialHighlights(
+        initialHighlights.filter((highlight: any) =>
+          highlight.text == text ? (highlight.disabled = true) : highlight
+        )
+      );
     }
   };
 
   return (
     <button
-      disabled={selected}
+      disabled={disabled}
       onClick={handleClick}
       className={` ${
-        selected ? "bg-gray-200" : ""
+        disabled ? "bg-gray-200" : ""
       } hover:bg-grayLighter flex gap-2 p-3  rounded-2xl shadow-md items-center text-center`}
     >
       <AiOutlineCheckCircle className="text-primary" />

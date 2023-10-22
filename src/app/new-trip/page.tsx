@@ -19,7 +19,6 @@ const Page = () => {
   const [highLightsSelected, setHighLightsSelected] = useState(false);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [countryCode, setCountryCode] = useState("");
-  const [descriptions, setDescriptions] = useState("");
   const { status, data } = useSession();
   const router = useRouter();
 
@@ -33,7 +32,7 @@ const Page = () => {
     }
   }, [status]);
 
-  async function createTrip() {
+  async function createTrip(descriptions: Object) {
     const data = await {
       citysSelected,
       highLights,
@@ -42,7 +41,7 @@ const Page = () => {
       descriptions,
     };
 
-    if (descriptions != "") {
+    if (descriptions) {
       try {
         const res = await fetch("/api/trips/create", {
           method: "POST",
@@ -89,10 +88,7 @@ const Page = () => {
         <TripImages setUploadedImages={setUploadedImages} />
       )}
       {highLightsSelected && uploadedImages.length >= 5 && (
-        <TripDescriptions
-          setDescriptions={setDescriptions}
-          createTrip={createTrip}
-        />
+        <TripDescriptions createTrip={createTrip} />
       )}
     </div>
   );

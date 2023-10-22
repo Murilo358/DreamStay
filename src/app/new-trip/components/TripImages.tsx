@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { LiaSpinnerSolid } from "react-icons/lia";
-import Button from "@/components/Button";
 
 interface tripImagesProps {
   setUploadedImages: any;
@@ -19,31 +18,30 @@ const TripImages = ({ setUploadedImages }: tripImagesProps) => {
 
   async function uploadImage(image: File) {
     const formData = new FormData();
-
-    formData.append("file", image);
-    formData.append("upload_preset", "my-uploads");
-    setLoading(true);
-    setdisabledButton(true);
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/dcrhnzor7/image/upload",
-      {
+    const url = process.env.NEXT_PUBLIC_UPLOAD_WEBSITE;
+    if (url) {
+      formData.append("file", image);
+      formData.append("upload_preset", "my-uploads");
+      setLoading(true);
+      setdisabledButton(true);
+      const data = await fetch(url, {
         method: "POST",
         body: formData,
-      }
-    )
-      .then((response) => response.json())
-      .catch((error) => {
-        toast.error(
-          "Oops, erro ao fazer upload da image, tente novamente mais tarde!",
-          {
-            position: "bottom-center",
-          }
-        );
-        setdisabledButton(false);
-      });
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          toast.error(
+            "Oops, erro ao fazer upload da image, tente novamente mais tarde!",
+            {
+              position: "bottom-center",
+            }
+          );
+          setdisabledButton(false);
+        });
 
-    setUploadedImages((prevImages: any) => [...prevImages, data.url]);
-    setLoading(false);
+      setUploadedImages((prevImages: any) => [...prevImages, data.url]);
+      setLoading(false);
+    }
   }
 
   const handleClick = async () => {

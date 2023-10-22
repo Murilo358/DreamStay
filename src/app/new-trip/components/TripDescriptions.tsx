@@ -1,10 +1,12 @@
+"use client";
 import Input from "@/components/Input";
-import React from "react";
+import React, { useState } from "react";
 import CurrencyInput from "@/components/CurrencyInput";
 import DatePicker from "@/components/DatePicker";
 import { Controller, useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import TextArea from "@/components/TextArea";
+import { LiaSpinnerSolid } from "react-icons/lia";
 
 interface TripReservationForm {
   guests: number;
@@ -15,26 +17,28 @@ interface TripReservationForm {
   pricePerDay: number;
 }
 
-const TripDescriptions = ({ setDescriptions, createTrip }: any) => {
+const TripDescriptions = ({ createTrip }: any) => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     control,
     watch,
     formState: { errors },
-    setError,
   } = useForm<TripReservationForm>();
 
-  const title = watch("title");
+  watch("title");
   const startDate = watch("startDate");
   const endDate = watch("endDate");
-  const description = watch("description");
-  const pricePerDay = watch("pricePerDay");
-  const maxGuestsInput = watch("guests");
+  watch("description");
+  watch("pricePerDay");
+  watch("guests");
 
   const onSubmit = async (data: TripReservationForm) => {
-    await setDescriptions(data);
-    createTrip();
+    setLoading(true);
+    await createTrip(data);
+    setLoading(false);
   };
 
   return (
@@ -44,7 +48,7 @@ const TripDescriptions = ({ setDescriptions, createTrip }: any) => {
         Preencha os dados abaixo
       </h1>
 
-      <div className="flex gap-3 ">
+      <div className="flex gap-3 lg:flex-nowrap flex-wrap ">
         <Input
           {...register("title", {
             required: {
@@ -146,18 +150,26 @@ const TripDescriptions = ({ setDescriptions, createTrip }: any) => {
             message: "Por favor informe o número de hóspedes"
           },
         })}
-          className=""
+          className="w-full"
           placeholder={`Núm máximo de hóspedes`}
           error={!!errors?.guests}
           errorMessage={errors?.guests?.message}
           type="number"
         />
       </div>
+
       <Button
+        disabled={loading}
         onClick={() => handleSubmit(onSubmit)()}
         className="w-full mt-3 h-[40px]"
       >
-        Criar reservar!
+        {loading ? (
+          <div className="flex items-center text-center justify-center w-100">
+            <LiaSpinnerSolid className="animate-spin w-[35px] h-[35px]" />
+          </div>
+        ) : (
+          "Criar viagem"
+        )}
       </Button>
     </div>
   );

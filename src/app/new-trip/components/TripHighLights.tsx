@@ -18,7 +18,28 @@ const TripHighLights = ({
 }: TripHighLightsProps) => {
   const [newHighLight, setNewHighLights] = useState("");
 
+  const defaultHighlights = [
+    { text: "Conforto e Design", disabled: false },
+    { text: "Café da manhã incluso", disabled: false },
+    { text: "Serviços e Conveniências", disabled: false },
+    { text: "Bem-estar e Relaxamento", disabled: false },
+    { text: "Sustentabilidade e Responsabilidade Social", disabled: false },
+    { text: "Piscina", disabled: false },
+    { text: "Estacionamento grátis", disabled: false },
+    { text: "Wifi grátis", disabled: false },
+  ];
+  const [initialHighlights, setInitialHighlights] = useState(defaultHighlights);
+
   const handleClick = () => {
+    if (
+      newHighLight === "" ||
+      newHighLight === undefined ||
+      newHighLight === null
+    ) {
+      toast.error("O destaque não pode ser vázio!", {
+        position: "bottom-center",
+      });
+    }
     if (highLights.includes(newHighLight)) {
       toast.error("Oops, esse destaque ja foi adicionado!", {
         position: "bottom-center",
@@ -33,53 +54,20 @@ const TripHighLights = ({
       <h1 className="  font-medium mt-10 mb-10 text-xl text-center text-primaryDarker lg:text-3xl ">
         Insira ao menos 2 destaques da sua acomodação
       </h1>
-
       <div className="flex flex-wrap lg:w-1/2  justify-center gap-2 lg:gap-5 items-center">
-        <TripHighLightsOption
-          text="Conforto e Design"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Café da manhã incluso"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Serviços e Conveniências"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Bem-estar e Relaxamento"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Sustentabilidade e Responsabilidade Social"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Piscina"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Estacionamento grátis"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Vista paradisíaca"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
-        <TripHighLightsOption
-          text="Wifi grátis"
-          highLights={highLights}
-          setHighLights={setHighLights}
-        />
+        {initialHighlights &&
+          initialHighlights.map((highlight) => (
+            <TripHighLightsOption
+              initialHighlights={initialHighlights}
+              disabled={highlight.disabled}
+              defaults={true}
+              setInitialHighlights={setInitialHighlights}
+              key={highlight.text}
+              text={highlight.text}
+              highLights={highLights}
+              setHighLights={setHighLights}
+            />
+          ))}
       </div>
       <div className="flex mt-4 border-grayLighter border-solid border rounded-full ">
         <input
@@ -102,9 +90,13 @@ const TripHighLights = ({
         {highLights.length > 0 &&
           highLights.map((highLight: any) => (
             <TripHighLightsOption
+              setInitialHighlights={setInitialHighlights}
+              initialHighlights={initialHighlights}
               highLights={highLights}
               setHighLights={setHighLights}
               added={true}
+              disabled={false}
+              defaults={false}
               key={highLight}
               text={highLight}
             />
