@@ -1,7 +1,10 @@
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
+  const prisma = new PrismaClient();
   const trips = await prisma.trip.findMany({});
 
   if (!trips) {

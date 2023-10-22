@@ -5,9 +5,24 @@
 
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { spawn } from "child_process";
 
 export async function POST(request: Request) {
   const req = await request.json();
+    
+  const generatePrisma = async () => {
+    try {
+      await prisma.$connect();
+      await prisma.$executeRaw`PRISMA MIGRATE DEPLOY \--preview-feature  `;
+      await prisma.$executeRaw`PRISMA GENERATE`;
+      await prisma.$executeRaw`PRISMA DB PULL`;
+      console.log("Prisma migration completed successfully.");
+    } catch (error) {
+      console.error("Prisma migration failed:", error);
+    } finally {
+      await prisma.$disconnect();
+    }
+  };
 
   const {
     citysSelected,
@@ -36,6 +51,8 @@ export async function POST(request: Request) {
       lng: citysSelected.positions.lng.toString(),
     },
   });
+
+  generatePrisma();
 
   return new NextResponse(
     JSON.stringify({
