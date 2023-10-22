@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<hr>
+<p align="center">
+   <img src="http://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=RED&style=for-the-badge" #vitrine/>
+</p>
+<hr>
 
-## Getting Started
 
-First, run the development server:
+### Tópicos 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [Descrição do projeto](#Descrição-do-projeto)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Funcionalidades](#Funcionalidades)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Ferramentas utilizadas](#Ferramentas-utilizadas)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Desenvolvedor](#Desenvolvedor)
 
-## Learn More
+## Descrição do projeto 
 
-To learn more about Next.js, take a look at the following resources:
+<p align="justify">
+O DreamStay é um website de viagens desenvolvido com a tecnologia Next.js e conectado a um banco de dados Supabase que utiliza PostgreSQL. Aqui, você pode comprar pacotes de viagem prontos, pesquisar por destinos e até mesmo criar a sua própria viagem de maneira simples e descomplicada.
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+:white_check_mark: `Funcionalidade 1:` Realizar compra das viagens
 
-## Deploy on Vercel
+:white_check_mark: `Funcionalidade 2:` Pesquisar viagens
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+:white_check_mark: `Funcionalidade 3:` Criar viagens 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+:white_check_mark: `Funcionalidade 4:` Criar reservas
+
+## Ferramentas-utilizadas
+
+ ![React](https://img.shields.io/badge/-React-0D1117?style=for-the-badge&logo=react&logoColor=61DAFB&labelColor=transparent)&nbsp;
+ ![HTML](https://img.shields.io/badge/-html-0D1117?style=for-the-badge&logo=html&logoColor=61DAFB&labelColor=transparent)&nbsp;
+  ![Tailwind](https://img.shields.io/badge/-CSS-0D1117?style=for-the-badge&logo=CSS3&logoColor=1572B6&labelColor=0D1117)&nbsp;
+  ![Typescript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)&nbsp;
+  ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)&nbsp;
+
+
+
+
+## Desenvolvedor
+
+[<img src="https://avatars.githubusercontent.com/u/111542827?v=4" width=115><br><sub>Murilo Barbosa</sub>](https://github.com/Murilo358) 
